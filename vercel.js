@@ -1,0 +1,6 @@
+{
+  "rewrites"; [
+    { "source": "/api/(.*)", "destination": "app.py" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
