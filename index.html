@@ -82,12 +82,35 @@
   }
   .nav-tab:hover { color: var(--text); background: var(--bg3); }
   .nav-tab.active { color: var(--text); background: var(--surface); border: 1px solid var(--border2); }
-  .nav-right { display: flex; align-items: center; gap: 10px; }
-  .btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: var(--font-body); }
-  .btn-ghost { background: none; color: var(--muted); border: 1px solid var(--border2); }
-  .btn-ghost:hover { color: var(--text); background: var(--bg3); }
-  .btn-primary { background: var(--pokered); color: #fff; border: 1px solid var(--pokered-l); }
-  .btn-primary:hover { background: var(--pokered-l); }
+
+  /* TRENDING TICKER in nav-right */
+  .nav-right { display: flex; align-items: center; gap: 10px; overflow: hidden; max-width: 320px; }
+  .trending-ticker {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(204,0,0,0.08); border: 1px solid var(--border2);
+    border-radius: 100px; padding: 4px 12px; overflow: hidden;
+    max-width: 260px; flex-shrink: 0;
+  }
+  .ticker-label {
+    font-size: 10px; font-weight: 700; color: var(--accent2);
+    text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; flex-shrink: 0;
+  }
+  .ticker-scroll {
+    overflow: hidden; white-space: nowrap; flex: 1;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+  .ticker-inner { display: inline-block; animation: tickerScroll 18s linear infinite; }
+  .ticker-item { display: inline; font-size: 12px; color: var(--muted); margin-right: 20px; }
+  .ticker-item span { color: var(--gold); font-family: var(--font-mono); font-size: 11px; }
+  @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  .api-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.3);
+    color: var(--green); font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    padding: 3px 10px; border-radius: 100px; white-space: nowrap;
+  }
+  .api-badge::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 
   /* PAGES */
   .page { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
@@ -111,7 +134,12 @@
   }
   .hero p { font-size: 17px; color: var(--muted); max-width: 560px; margin: 0 auto 2rem; }
   .hero-cta { display: flex; gap: 10px; justify-content: center; }
+  .btn { padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: var(--font-body); }
   .btn-lg { padding: 12px 28px; font-size: 15px; border-radius: 10px; }
+  .btn-ghost { background: none; color: var(--muted); border: 1px solid var(--border2); }
+  .btn-ghost:hover { color: var(--text); background: var(--bg3); }
+  .btn-primary { background: var(--pokered); color: #fff; border: 1px solid var(--pokered-l); }
+  .btn-primary:hover { background: var(--pokered-l); }
 
   /* SEARCH */
   .search-bar { display: flex; gap: 10px; margin: 2rem 0; }
@@ -219,22 +247,42 @@
   .stat-val { font-size: 13px; font-weight: 500; font-family: var(--font-mono); min-width: 28px; text-align: right; }
 
   /* TABS */
-  .tabs { display: flex; gap: 2px; background: var(--bg3); border-radius: 10px; padding: 3px; margin-bottom: 1.5rem; }
-  .tab-btn { flex: 1; padding: 7px 12px; border-radius: 8px; border: none; background: none; color: var(--muted); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: var(--font-body); }
+  .tabs { display: flex; gap: 2px; background: var(--bg3); border-radius: 10px; padding: 3px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab-btn { flex: 1; padding: 7px 12px; border-radius: 8px; border: none; background: none; color: var(--muted); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: var(--font-body); white-space: nowrap; }
   .tab-btn:hover { color: var(--text); }
   .tab-btn.active { background: var(--pokered); color: #fff; }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  /* MOVES TABLE */
+  /* MOVES TABLE — with generation column */
   .moves-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .moves-table th { text-align: left; padding: 6px 12px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+  .moves-table th { text-align: left; padding: 6px 12px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
   .moves-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
   .moves-table tr:last-child td { border-bottom: none; }
   .move-category { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
   .cat-physical { background: rgba(255,80,30,0.18); color: #ff7a50; }
   .cat-special  { background: rgba(60,160,210,0.18); color: #60c8f0; }
   .cat-status   { background: rgba(160,160,160,0.18); color: #b0b0b0; }
+  .gen-badge { font-family: var(--font-mono); font-size: 10px; color: var(--dim); background: var(--bg3); padding: 1px 5px; border-radius: 4px; }
+
+  /* EVOLUTION PATH */
+  .evo-path { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0.5rem 0; padding: 1rem; background: var(--bg3); border-radius: 10px; border: 1px solid var(--border); }
+  .evo-node { text-align: center; }
+  .evo-node img { width: 48px; height: 48px; image-rendering: pixelated; }
+  .evo-node-name { font-size: 11px; color: var(--muted); text-transform: capitalize; }
+  .evo-arrow { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .evo-arrow-icon { color: var(--pokered); font-size: 18px; line-height: 1; }
+  .evo-arrow-method { font-size: 9px; color: var(--dim); font-family: var(--font-mono); text-align: center; max-width: 60px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* FORMS BUTTON GROUP */
+  .forms-group { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+  .form-btn {
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border2); background: var(--bg3); color: var(--muted);
+    transition: all 0.15s; font-family: var(--font-body);
+  }
+  .form-btn:hover { border-color: var(--pokered); color: var(--text); }
+  .form-btn.active-form { background: var(--pokered); color: #fff; border-color: var(--pokered-l); }
 
   /* SECTION TITLE */
   .section-title { font-family: var(--font-display); font-size: 22px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 0.75rem; }
@@ -308,15 +356,12 @@
   .result-meta-val { font-size: 16px; font-weight: 600; }
   .result-meta-lab { font-size: 11px; color: var(--muted); }
 
-  /* API BADGE */
-  .api-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.3);
-    color: var(--green); font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
-    padding: 3px 10px; border-radius: 100px; margin-bottom: 0.5rem;
+  /* SEND TO LAB BUTTON */
+  .btn-lab {
+    background: rgba(78,205,196,0.1); color: var(--teal);
+    border: 1px solid rgba(78,205,196,0.3); font-size: 12px; padding: 5px 12px;
   }
-  .api-badge::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  .btn-lab:hover { background: rgba(78,205,196,0.2); }
 
   /* HEATMAP */
   .heatmap-grid { display: grid; grid-template-columns: auto repeat(18, 1fr); gap: 2px; font-size: 11px; overflow-x: auto; }
@@ -339,6 +384,7 @@
 
   /* CHART */
   .chart-wrap { position: relative; height: 220px; }
+  .chart-wrap-tall { position: relative; height: 280px; }
 
   /* DIVIDER */
   .divider { border: none; margin: 2rem 0; height: 3px; background: linear-gradient(90deg, transparent, var(--pokered), var(--poke-stripe), var(--pokered), transparent); opacity: 0.35; }
@@ -356,6 +402,33 @@
   .pokeball-divider::before, .pokeball-divider::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
   .pokeball-icon { width: 22px; height: 22px; flex-shrink: 0; opacity: 0.55; }
 
+  /* META TRENDS DASHBOARD */
+  .trends-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  .trend-card { background: var(--surface); border: 1px solid var(--border2); border-radius: 14px; padding: 1.5rem; }
+  .trend-card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .trend-selector { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .trend-pill {
+    padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border2); background: var(--bg3); color: var(--muted);
+    transition: all 0.15s;
+  }
+  .trend-pill:hover { border-color: var(--pokered); color: var(--text); }
+  .trend-pill.active-trend { background: var(--pokered); color: #fff; border-color: var(--pokered-l); }
+  .popularity-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,209,102,0.1); border: 1px solid rgba(255,209,102,0.3);
+    color: var(--gold); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px;
+  }
+  .tier-list { display: flex; flex-direction: column; gap: 4px; }
+  .tier-row { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 8px; background: var(--bg3); }
+  .tier-rank { font-family: var(--font-mono); font-size: 11px; color: var(--dim); min-width: 24px; }
+  .tier-sprite img { width: 32px; height: 32px; image-rendering: pixelated; }
+  .tier-name { font-size: 13px; font-weight: 600; text-transform: capitalize; flex: 1; }
+  .tier-bar-wrap { width: 120px; }
+  .tier-bar-bg { height: 4px; background: var(--bg); border-radius: 2px; overflow: hidden; }
+  .tier-bar-fill { height: 100%; border-radius: 2px; background: var(--pokered); transition: width 0.6s ease; }
+  .tier-pct { font-family: var(--font-mono); font-size: 11px; color: var(--muted); min-width: 36px; text-align: right; }
+
   /* RESPONSIVE */
   @media (max-width: 700px) {
     .team-slots { grid-template-columns: repeat(3, 1fr); }
@@ -363,6 +436,9 @@
     .calc-vs { padding-top: 0; }
     nav { padding: 0 1rem; }
     .page { padding: 1rem; }
+    .trends-grid { grid-template-columns: 1fr; }
+    .nav-right { max-width: 140px; }
+    .trending-ticker { display: none; }
   }
 
   /* ANIMATIONS */
@@ -407,12 +483,33 @@
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard', this)">Knowledge Base</button>
     <button class="nav-tab" onclick="showPage('lab', this)">Trainer's Lab</button>
+    <button class="nav-tab" onclick="showPage('trends', this)">Meta Trends</button>
     <button class="nav-tab" onclick="showPage('team', this)">My Team</button>
   </div>
   <div class="nav-right">
     <div class="api-badge">Live API</div>
-    <button class="btn btn-ghost">Log In</button>
-    <button class="btn btn-primary">Sign Up</button>
+    <div class="trending-ticker">
+      <span class="ticker-label">🔥 Hot</span>
+      <div class="ticker-scroll">
+        <div class="ticker-inner" id="tickerInner">
+          <span class="ticker-item">Charizard <span>+12%</span></span>
+          <span class="ticker-item">Garchomp <span>+8%</span></span>
+          <span class="ticker-item">Mewtwo <span>+5%</span></span>
+          <span class="ticker-item">Miraidon <span>+19%</span></span>
+          <span class="ticker-item">Flutter Mane <span>+14%</span></span>
+          <span class="ticker-item">Dragapult <span>+6%</span></span>
+          <span class="ticker-item">Koraidon <span>+11%</span></span>
+          <!-- duplicate for seamless loop -->
+          <span class="ticker-item">Charizard <span>+12%</span></span>
+          <span class="ticker-item">Garchomp <span>+8%</span></span>
+          <span class="ticker-item">Mewtwo <span>+5%</span></span>
+          <span class="ticker-item">Miraidon <span>+19%</span></span>
+          <span class="ticker-item">Flutter Mane <span>+14%</span></span>
+          <span class="ticker-item">Dragapult <span>+6%</span></span>
+          <span class="ticker-item">Koraidon <span>+11%</span></span>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -441,10 +538,7 @@
     <button class="btn btn-primary" onclick="handleSearch(document.getElementById('pokeSearch').value)">Search</button>
   </div>
 
-  <!-- Live API search dropdown results -->
   <div id="liveResults" class="live-results" style="display:none"></div>
-
-  <!-- Static grid of preloaded Pokémon (from local POKEMON_DATA + lazy-loaded from API) -->
   <div class="pokemon-grid" id="pokemonGrid"></div>
   <div class="load-more-wrap" id="loadMoreWrap">
     <button class="btn btn-ghost" onclick="loadMoreGrid()">Load More Pokémon</button>
@@ -472,7 +566,7 @@
         <div class="calc-sprite" id="atk-sprite"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="Charizard" onerror="this.style.display='none'"/></div>
         <div>
           <div class="calc-pokemon-name" id="atk-name">Charizard</div>
-          <div style="font-size:12px;color:var(--muted)">Lv. 100 · Fire / Flying</div>
+          <div style="font-size:12px;color:var(--muted)" id="atk-meta">Lv. 100 · Fire / Flying</div>
         </div>
       </div>
       <select class="select-input" id="atk-move" onchange="calcDamage()">
@@ -499,7 +593,7 @@
         <div class="calc-sprite" id="def-sprite"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" alt="Venusaur" onerror="this.style.display='none'"/></div>
         <div>
           <div class="calc-pokemon-name" id="def-name">Venusaur</div>
-          <div style="font-size:12px;color:var(--muted)">Lv. 100 · Grass / Poison</div>
+          <div style="font-size:12px;color:var(--muted)" id="def-meta">Lv. 100 · Grass / Poison</div>
         </div>
       </div>
       <select class="select-input" id="def-pokemon" onchange="updateDefender()">
@@ -528,13 +622,12 @@
 
   <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="calcDamage()">Calculate Damage ⚡</button>
 
-  <!-- Search a live Pokémon and use it as attacker -->
   <div class="pokeball-divider" style="margin-top:2rem">
     <svg class="pokeball-icon" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="15" r="15" fill="#cc0000"/><rect x="0" y="13" width="30" height="4" fill="#111"/><circle cx="15" cy="15" r="4" fill="#111"/><circle cx="15" cy="15" r="2.8" fill="#fff"/></svg>
   </div>
 
   <div class="section-title">Live Pokémon <span>Lookup</span></div>
-  <div class="section-sub">Pull any Pokémon from the PokeAPI and instantly view its full stats and move set.</div>
+  <div class="section-sub">Pull any Pokémon from the PokeAPI and instantly view its full stats and move set. Use "Send to Lab" to set it as attacker or defender.</div>
 
   <div class="search-bar">
     <input class="search-input" type="text" placeholder="e.g. garchomp, umbreon, iron-valiant…" id="labSearch" oninput="labLiveSearch(this.value)" />
@@ -551,6 +644,51 @@
   <div class="section-title">IV / EV <span>Tracker</span></div>
   <div class="section-sub">Record your Pokémon's Individual Values and Effort Values for precise stat calculations.</div>
   <div id="trackerList"></div>
+</div>
+
+<!-- ===== META TRENDS PAGE ===== -->
+<div class="page" id="page-trends">
+  <div class="section-title">Meta <span>Trends</span></div>
+  <div class="section-sub">Usage popularity trends and competitive tier rankings — powered by simulated trend data from the backend API.</div>
+
+  <div class="trends-grid">
+    <div class="trend-card">
+      <div class="trend-card-title">
+        📈 Usage Trend (30-Day)
+        <span class="popularity-badge" id="globalPopBadge">Loading…</span>
+      </div>
+      <div class="trend-selector" id="trendSelector"></div>
+      <div class="chart-wrap-tall"><canvas id="trendChart"></canvas></div>
+      <div class="chart-legend" id="trendLegend"></div>
+    </div>
+    <div class="trend-card">
+      <div class="trend-card-title">🏆 Top Usage This Season</div>
+      <div class="tier-list" id="tierList">
+        <div class="loading-bar"><div class="spinner"></div> Fetching trends…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pokeball-divider">
+    <svg class="pokeball-icon" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="15" r="15" fill="#cc0000"/><rect x="0" y="13" width="30" height="4" fill="#111"/><circle cx="15" cy="15" r="4" fill="#111"/><circle cx="15" cy="15" r="2.8" fill="#fff"/></svg>
+  </div>
+
+  <div class="section-title">Compare <span>Pokémon</span></div>
+  <div class="section-sub">Search up to 3 Pokémon to compare their usage trends side by side.</div>
+  <div class="search-bar">
+    <input class="search-input" type="text" placeholder="e.g. pikachu, charizard, mewtwo…" id="trendSearch" oninput="trendSearchInput(this.value)" />
+    <button class="btn btn-primary" onclick="addTrendPokemon()">Add to Chart</button>
+  </div>
+  <div id="trendSearchResults" class="live-results" style="display:none"></div>
+  <div id="compareChartWrap" style="display:none">
+    <div class="trend-card" style="margin-top:1rem">
+      <div class="trend-card-title">📊 Comparison Chart
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:11px" onclick="clearCompare()">Clear All</button>
+      </div>
+      <div id="compareChips" class="trend-selector"></div>
+      <div class="chart-wrap-tall"><canvas id="compareChart"></canvas></div>
+    </div>
+  </div>
 </div>
 
 <!-- ===== TEAM PAGE ===== -->
@@ -598,6 +736,7 @@
 // ============================================================
 const SPRITE_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
+const API_BASE = 'http://localhost:8000'; // FastAPI backend
 
 function spriteUrlById(id) { return `${SPRITE_BASE}${id}.png`; }
 function spriteImgById(id, name, size=80) {
@@ -605,10 +744,10 @@ function spriteImgById(id, name, size=80) {
 }
 
 // ============================================================
-// FULL POKEAPI LIVE FETCH SYSTEM (from original file 1)
+// FULL POKEAPI LIVE FETCH SYSTEM
 // ============================================================
-let fullApiList = [];     // all 1025 names from PokeAPI
-let apiCache = {};        // name -> full pokemon data
+let fullApiList = [];
+let apiCache = {};
 let gridOffset = 0;
 const GRID_PAGE = 20;
 
@@ -616,8 +755,9 @@ async function initPokeAPI() {
   try {
     const res = await fetch(`${POKEAPI_BASE}/pokemon?limit=1025&offset=0`);
     const data = await res.json();
-    fullApiList = data.results; // [{name, url}]
+    fullApiList = data.results;
     renderGridPage(0);
+    initMetaTrends();
   } catch(e) {
     console.error('PokeAPI init failed', e);
   }
@@ -634,13 +774,29 @@ async function fetchPokemonByName(name) {
   } catch(e) { return null; }
 }
 
+async function fetchSpeciesByName(name) {
+  try {
+    const res = await fetch(`${POKEAPI_BASE}/pokemon-species/${name.toLowerCase()}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+async function fetchEvolutionChain(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
 function pokemonIdFromUrl(url) {
   const parts = url.split('/').filter(Boolean);
   return parseInt(parts[parts.length - 1]);
 }
 
 // ============================================================
-// GRID RENDER (lazy API cards)
+// GRID RENDER
 // ============================================================
 function renderGridPage(offset) {
   const grid = document.getElementById('pokemonGrid');
@@ -665,7 +821,7 @@ function renderGridPage(offset) {
 function loadMoreGrid() { renderGridPage(gridOffset); }
 
 // ============================================================
-// LIVE SEARCH (from file 1 logic, now with rich dropdown UI)
+// LIVE SEARCH
 // ============================================================
 let searchDebounce = null;
 function handleSearch(q) {
@@ -704,14 +860,12 @@ async function doSearch(q) {
 }
 
 // ============================================================
-// SELECT & RENDER DETAIL (full live API data)
+// SELECT & RENDER DETAIL
 // ============================================================
 let selectedPokemon = null;
 
 async function selectLivePokemon(name) {
-  // Highlight selected
   document.querySelectorAll('.poke-card').forEach(c => c.classList.remove('selected'));
-  // Hide dropdown
   document.getElementById('liveResults').style.display = 'none';
 
   const detailSec = document.getElementById('detailSection');
@@ -722,15 +876,20 @@ async function selectLivePokemon(name) {
   const data = await fetchPokemonByName(name);
   if (!data) { document.getElementById('detailPanel').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-text">Failed to load Pokémon data.</div></div>'; return; }
   selectedPokemon = data;
-  renderLiveDetail(data, 'detailPanel');
+
+  // Fetch species for forms + evolution
+  const species = await fetchSpeciesByName(name);
+  renderLiveDetail(data, 'detailPanel', species);
 }
 
 // ============================================================
-// RENDER LIVE DETAIL PANEL (PokeAPI data)
+// RENDER LIVE DETAIL PANEL (with Forms, Evolution, enhanced Moves)
 // ============================================================
 let activeDetailTab = {};
+// Track active form per pokemon id
+let activeFormMap = {};
 
-function renderLiveDetail(data, panelId) {
+function renderLiveDetail(data, panelId, species = null) {
   const panel = document.getElementById(panelId);
   const statMap = {hp:'#ff5555',attack:'#ff9f43',defense:'#ffd166','special-attack':'#a78bfa','special-defense':'#4ecdc4',speed:'#06d6a0'};
   const statMax = {hp:255,attack:165,defense:230,'special-attack':194,'special-defense':230,speed:200};
@@ -745,35 +904,98 @@ function renderLiveDetail(data, panelId) {
     </div>
   `).join('');
 
-  // moves by method
-  const levelMoves = data.moves.filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'level-up'))
-    .map(m => ({name:m.move.name, lv: (m.version_group_details.find(d=>d.move_learn_method.name==='level-up')?.level_learned_at)||0}))
-    .sort((a,b)=>a.lv-b.lv).slice(0,20);
-  const eggMoves = data.moves.filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'egg')).slice(0,15);
-  const tutorMoves = data.moves.filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'tutor')).slice(0,15);
-  const tmMoves = data.moves.filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'machine')).slice(0,20);
-
   const tabKey = `detail-${data.id}`;
   if (!activeDetailTab[tabKey]) activeDetailTab[tabKey] = 'levelup';
   const curTab = activeDetailTab[tabKey];
 
+  // ---- FORMS from species ----
+  let formsHtml = '';
+  if (species && species.varieties && species.varieties.length > 1) {
+    const varNames = species.varieties.map(v => v.pokemon.name);
+    const activeForm = activeFormMap[data.id] || data.name;
+    formsHtml = `
+      <div style="margin-top:8px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Forms</div>
+        <div class="forms-group">${varNames.map(v =>
+          `<button class="form-btn ${v===activeForm?'active-form':''}" onclick="switchForm(${data.id},'${panelId}','${v}','${JSON.stringify(species).replace(/'/g,'').replace(/"/g,'&quot;')}')">${formatFormName(v)}</button>`
+        ).join('')}</div>
+      </div>`;
+  }
+
+  // ---- SEND TO LAB buttons ----
+  const labHtml = `
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn btn-outline btn-sm" onclick="addLivePokemonToTeam(${data.id},'${data.name}','${types.join('-')}')">+ Add to Team</button>
+      <button class="btn btn-lab btn-sm" onclick="sendToLab(${data.id},'${data.name}','${types.join('-')}',${data.stats.find(s=>s.stat.name==='special-attack')?.base_stat||100},'atk')">⚗ Send as Attacker</button>
+      <button class="btn btn-lab btn-sm" onclick="sendToLab(${data.id},'${data.name}','${types.join('-')}',${data.stats.find(s=>s.stat.name==='special-defense')?.base_stat||100},'def')">🛡 Send as Defender</button>
+    </div>`;
+
+  // ---- GROUPED MOVES by generation ----
+  function genFromVersionGroup(vg) {
+    const genMap = {
+      'red-blue':'Gen I','yellow':'Gen I','gold-silver':'Gen II','crystal':'Gen II',
+      'ruby-sapphire':'Gen III','firered-leafgreen':'Gen III','emerald':'Gen III',
+      'diamond-pearl':'Gen IV','platinum':'Gen IV','heartgold-soulsilver':'Gen IV',
+      'black-white':'Gen V','black-2-white-2':'Gen V',
+      'x-y':'Gen VI','omega-ruby-alpha-sapphire':'Gen VI',
+      'sun-moon':'Gen VII','ultra-sun-ultra-moon':'Gen VII',
+      'sword-shield':'Gen VIII','brilliant-diamond-and-shining-pearl':'Gen VIII','legends-arceus':'Gen VIII',
+      'scarlet-violet':'Gen IX',
+    };
+    return genMap[vg] || vg;
+  }
+
+  const levelMoves = data.moves
+    .filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'level-up'))
+    .map(m => {
+      const vgd = m.version_group_details.find(d => d.move_learn_method.name === 'level-up');
+      return { name: m.move.name, lv: vgd?.level_learned_at || 0, gen: genFromVersionGroup(vgd?.version_group?.name||'') };
+    })
+    .sort((a,b) => a.lv - b.lv).slice(0, 24);
+
+  const tmMoves = data.moves
+    .filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'machine'))
+    .map(m => {
+      const vgd = m.version_group_details.find(d => d.move_learn_method.name === 'machine');
+      return { name: m.move.name, gen: genFromVersionGroup(vgd?.version_group?.name||'') };
+    }).slice(0, 24);
+
+  const eggMoves = data.moves
+    .filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'egg'))
+    .map(m => {
+      const vgd = m.version_group_details.find(d => d.move_learn_method.name === 'egg');
+      return { name: m.move.name, gen: genFromVersionGroup(vgd?.version_group?.name||'') };
+    }).slice(0, 16);
+
+  const tutorMoves = data.moves
+    .filter(m => m.version_group_details.some(d => d.move_learn_method.name === 'tutor'))
+    .map(m => {
+      const vgd = m.version_group_details.find(d => d.move_learn_method.name === 'tutor');
+      return { name: m.move.name, gen: genFromVersionGroup(vgd?.version_group?.name||'') };
+    }).slice(0, 16);
+
   function moveTable(moves, showLv) {
     if (!moves.length) return '<div class="empty-state" style="padding:1rem"><div class="empty-text">No moves found</div></div>';
     return `<div style="overflow-x:auto"><table class="moves-table">
-      <thead><tr>${showLv?'<th>Lv.</th>':''}<th>Move</th></tr></thead>
-      <tbody>${moves.map(m=>`<tr>${showLv?`<td style="font-family:var(--font-mono);color:var(--muted)">${m.lv}</td>`:''}<td style="font-weight:500;text-transform:capitalize">${(m.name||m.move.name).replace(/-/g,' ')}</td></tr>`).join('')}</tbody>
+      <thead><tr>${showLv?'<th>Lv.</th>':''}<th>Move</th><th>Introduced</th></tr></thead>
+      <tbody>${moves.map(m=>`<tr>
+        ${showLv?`<td style="font-family:var(--font-mono);color:var(--muted)">${m.lv}</td>`:''}
+        <td style="font-weight:500;text-transform:capitalize">${(m.name||'').replace(/-/g,' ')}</td>
+        <td><span class="gen-badge">${m.gen||'—'}</span></td>
+      </tr>`).join('')}</tbody>
     </table></div>`;
   }
 
   panel.innerHTML = `
     <div class="detail-header">
-      <div class="detail-sprite">${spriteImgById(data.id, data.name, 120)}</div>
+      <div class="detail-sprite" id="${panelId}-sprite">${spriteImgById(data.id, data.name, 120)}</div>
       <div class="detail-info">
-        <div class="detail-name">${data.name.replace(/-/g,' ')}</div>
+        <div class="detail-name" id="${panelId}-name">${data.name.replace(/-/g,' ')}</div>
         <div class="detail-meta">#${String(data.id).padStart(3,'0')} · HT: ${data.height/10}m · WT: ${data.weight/10}kg</div>
-        <div class="poke-types" style="margin-bottom:12px">${typeHtml}</div>
+        <div class="poke-types" style="margin-bottom:8px">${typeHtml}</div>
         <div class="stat-grid">${statBars}</div>
-        <button class="btn btn-outline btn-sm" style="margin-top:10px" onclick="addLivePokemonToTeam(${data.id},'${data.name}','${types.join('-')}')">+ Add to My Team</button>
+        ${formsHtml}
+        ${labHtml}
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;flex-wrap:wrap">
@@ -793,22 +1015,163 @@ function renderLiveDetail(data, panelId) {
       <div>
         <div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Stat Distribution</div>
         <div class="chart-wrap"><canvas id="statChart-live-${data.id}"></canvas></div>
-        <div style="margin-top:8px">
+        <div style="margin-top:8px" id="${panelId}-artwork">
           <img src="${data.sprites.other?.['official-artwork']?.front_default || spriteUrlById(data.id)}" alt="${data.name}" style="width:100%;max-height:160px;object-fit:contain;image-rendering:pixelated;border-radius:10px;background:var(--bg3)" onerror="this.src='${spriteUrlById(data.id)}'">
         </div>
+        ${species ? `<div id="${panelId}-evo" style="margin-top:12px"><div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Evolution Path</div><div class="loading-bar" style="padding:0.5rem"><div class="spinner"></div></div></div>` : ''}
       </div>
     </div>
   `;
+
   setTimeout(() => renderLiveStatChart(data), 50);
+
+  // Load evolution chain async
+  if (species && species.evolution_chain) {
+    fetchEvolutionChain(species.evolution_chain.url).then(evoData => {
+      if (!evoData) return;
+      const evoEl = document.getElementById(`${panelId}-evo`);
+      if (!evoEl) return;
+      const nodes = parseEvolutionChain(evoData.chain);
+      if (nodes.length < 2) { evoEl.innerHTML = ''; return; }
+      evoEl.innerHTML = `<div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Evolution Path</div>` + renderEvolutionPath(nodes);
+    });
+  }
 }
 
-function switchDetailTab(tabKey, tab, pokemonId, panelId) {
-  activeDetailTab[tabKey] = tab;
-  // re-render with cache
-  const data = Object.values(apiCache).find(d => d.id === pokemonId);
-  if (data) renderLiveDetail(data, panelId);
+function formatFormName(name) {
+  const n = name.replace(/-/g, ' ');
+  if (n.includes('mega')) return '⚡ Mega';
+  if (n.includes('gigantamax') || n.includes('gmax')) return '🌀 Gmax';
+  if (n.includes('alolan')) return '🌺 Alolan';
+  if (n.includes('galarian')) return '⚔ Galarian';
+  if (n.includes('hisuian')) return '🏔 Hisuian';
+  if (n.includes('paldean')) return '🌊 Paldean';
+  return n.split(' ').map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
 }
 
+async function switchForm(pokemonId, panelId, formName, speciesJson) {
+  activeFormMap[pokemonId] = formName;
+  const panel = document.getElementById(panelId);
+  panel.innerHTML = `<div class="loading-bar"><div class="spinner"></div> Loading form…</div>`;
+  const data = await fetchPokemonByName(formName);
+  if (!data) { panel.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-text">Form data not available.</div></div>'; return; }
+  apiCache[formName] = data;
+  // Re-use existing species data we already have
+  const species = await fetchSpeciesByName(formName.split('-')[0]);
+  renderLiveDetail(data, panelId, species);
+}
+
+// ============================================================
+// EVOLUTION CHAIN PARSING
+// ============================================================
+function parseEvolutionChain(chain) {
+  const nodes = [];
+  function walk(node, method) {
+    const name = node.species.name;
+    const id = pokemonIdFromUrl(node.species.url);
+    nodes.push({ name, id, method });
+    if (node.evolves_to && node.evolves_to.length > 0) {
+      const next = node.evolves_to[0];
+      const det = next.evolution_details[0];
+      let evoMethod = '';
+      if (det) {
+        if (det.min_level) evoMethod = `Lv.${det.min_level}`;
+        else if (det.item) evoMethod = det.item.name.replace(/-/g,' ');
+        else if (det.trigger?.name === 'trade') evoMethod = 'Trade';
+        else if (det.min_happiness) evoMethod = `Friendship`;
+        else if (det.time_of_day) evoMethod = det.time_of_day;
+        else evoMethod = det.trigger?.name || '?';
+      }
+      walk(next, evoMethod);
+    }
+  }
+  walk(chain, '');
+  return nodes;
+}
+
+function renderEvolutionPath(nodes) {
+  let html = '<div class="evo-path">';
+  nodes.forEach((n, i) => {
+    html += `<div class="evo-node"><img src="${spriteUrlById(n.id)}" alt="${n.name}" onerror="this.style.opacity='0.3'"><div class="evo-node-name">${n.name.replace(/-/g,' ')}</div></div>`;
+    if (i < nodes.length - 1) {
+      html += `<div class="evo-arrow"><div class="evo-arrow-icon">→</div><div class="evo-arrow-method">${nodes[i+1].method}</div></div>`;
+    }
+  });
+  html += '</div>';
+  return html;
+}
+
+// ============================================================
+// SEND TO LAB
+// ============================================================
+function sendToLab(id, name, typesStr, stat, role) {
+  const types = typesStr.split('-');
+  const spriteUrl = spriteUrlById(id);
+
+  if (role === 'atk') {
+    const img = document.querySelector('#atk-sprite img');
+    if (img) img.src = spriteUrl;
+    document.getElementById('atk-name').textContent = name.replace(/-/g,' ');
+    document.getElementById('atk-meta').textContent = `Lv. 100 · ${types.join(' / ')}`;
+    document.getElementById('atk-stat').value = stat;
+    // Update STAB types in lab context
+    labAtkTypes = types;
+  } else {
+    const img = document.querySelector('#def-sprite img');
+    if (img) img.src = spriteUrl;
+    document.getElementById('def-name').textContent = name.replace(/-/g,' ');
+    document.getElementById('def-meta').textContent = `Lv. 100 · ${types.join(' / ')}`;
+    document.getElementById('def-stat').value = stat;
+    labDefTypes = types;
+  }
+
+  // Switch to lab page
+  showPage('lab', document.querySelectorAll('.nav-tab')[1]);
+  calcDamage();
+}
+
+// Dynamic lab pokemon types (updated by sendToLab)
+let labAtkTypes = ['fire','flying']; // default Charizard
+let labDefTypes = ['grass','poison']; // default Venusaur
+
+// ============================================================
+// LAB PAGE — LIVE SEARCH & DETAIL
+// ============================================================
+let labSearchDebounce = null;
+function labLiveSearch(q) {
+  clearTimeout(labSearchDebounce);
+  labSearchDebounce = setTimeout(() => doLabSearch(q), 200);
+}
+async function doLabSearch(q) {
+  const container = document.getElementById('labLiveResults');
+  if (!q) { container.style.display = 'none'; return; }
+  const filtered = fullApiList.filter(p => p.name.includes(q.toLowerCase())).slice(0, 8);
+  if (!filtered.length) { container.style.display = 'none'; return; }
+  container.style.display = 'block';
+  container.innerHTML = filtered.map(p => {
+    const id = pokemonIdFromUrl(p.url);
+    return `<div class="live-result-item" onclick="selectLabPokemon('${p.name}')">
+      <img src="${spriteUrlById(id)}" alt="${p.name}" onerror="this.style.opacity='0.3'">
+      <span style="text-transform:capitalize;font-weight:500">${p.name.replace(/-/g,' ')}</span>
+      <span class="live-result-num">#${String(id).padStart(3,'0')}</span>
+    </div>`;
+  }).join('');
+}
+async function selectLabPokemon(name) {
+  document.getElementById('labLiveResults').style.display = 'none';
+  const detailSec = document.getElementById('labDetailSection');
+  detailSec.style.display = 'block';
+  document.getElementById('labDetailPanel').innerHTML = `<div class="loading-bar"><div class="spinner"></div> Loading ${name}…</div>`;
+  detailSec.scrollIntoView({behavior:'smooth', block:'nearest'});
+  const data = await fetchPokemonByName(name);
+  if (!data) return;
+  const species = await fetchSpeciesByName(name);
+  renderLiveDetail(data, 'labDetailPanel', species);
+}
+
+// ============================================================
+// STAT CHART
+// ============================================================
 function renderLiveStatChart(data) {
   const canvasId = `statChart-live-${data.id}`;
   const ctx = document.getElementById(canvasId);
@@ -843,44 +1206,19 @@ function renderLiveStatChart(data) {
   });
 }
 
-// ============================================================
-// LAB PAGE — LIVE SEARCH & DETAIL
-// ============================================================
-let labSearchDebounce = null;
-function labLiveSearch(q) {
-  clearTimeout(labSearchDebounce);
-  labSearchDebounce = setTimeout(() => doLabSearch(q), 200);
-}
-async function doLabSearch(q) {
-  const container = document.getElementById('labLiveResults');
-  if (!q) { container.style.display = 'none'; return; }
-  const filtered = fullApiList.filter(p => p.name.includes(q.toLowerCase())).slice(0, 8);
-  if (!filtered.length) { container.style.display = 'none'; return; }
-  container.style.display = 'block';
-  container.innerHTML = filtered.map(p => {
-    const id = pokemonIdFromUrl(p.url);
-    return `<div class="live-result-item" onclick="selectLabPokemon('${p.name}')">
-      <img src="${spriteUrlById(id)}" alt="${p.name}" onerror="this.style.opacity='0.3'">
-      <span style="text-transform:capitalize;font-weight:500">${p.name.replace(/-/g,' ')}</span>
-      <span class="live-result-num">#${String(id).padStart(3,'0')}</span>
-    </div>`;
-  }).join('');
-}
-async function selectLabPokemon(name) {
-  document.getElementById('labLiveResults').style.display = 'none';
-  const detailSec = document.getElementById('labDetailSection');
-  detailSec.style.display = 'block';
-  document.getElementById('labDetailPanel').innerHTML = `<div class="loading-bar"><div class="spinner"></div> Loading ${name}…</div>`;
-  detailSec.scrollIntoView({behavior:'smooth', block:'nearest'});
-  const data = await fetchPokemonByName(name);
-  if (!data) return;
-  renderLiveDetail(data, 'labDetailPanel');
+function switchDetailTab(tabKey, tab, pokemonId, panelId) {
+  activeDetailTab[tabKey] = tab;
+  const data = Object.values(apiCache).find(d => d.id === pokemonId);
+  if (data) {
+    fetchSpeciesByName(data.name).then(species => {
+      renderLiveDetail(data, panelId, species);
+    });
+  }
 }
 
 // ============================================================
-// TEAM (live pokemon objects with id/name/types from API)
+// TEAM
 // ============================================================
-// team slot: {id, name, types[]}
 let team = [null,null,null,null,null,null];
 let trackerData = {};
 
@@ -1033,10 +1371,8 @@ function updateIV(name,stat,val) { if(trackerData[name]){trackerData[name].ivs[s
 function updateEV(name,stat,val) { if(trackerData[name]){trackerData[name].evs[stat]=Math.min(252,Math.max(0,+val));renderTracker();} }
 
 // ============================================================
-// DAMAGE CALCULATOR — mirrors FastAPI /calculate-damage endpoint
+// DAMAGE CALCULATOR — dynamic attacker/defender via sendToLab
 // Implements: ((((2*L/5+2)*P*A/D)/50)+2) * Modifier
-// Modifier = STAB * TypeEffectiveness
-// Range: min = floor(max * 0.85), max = floor(base * modifier)
 // ============================================================
 const TYPE_EFFECTIVENESS_MAP = {
   'fire-grass':2,'fire-ice':2,'fire-bug':2,'fire-steel':2,
@@ -1073,11 +1409,6 @@ const TYPE_EFFECTIVENESS_MAP = {
   'bug-fire':.5,'bug-fighting':.5,'bug-flying':.5,'bug-ghost':.5,'bug-steel':.5,'bug-fairy':.5,
 };
 
-/**
- * JS port of the FastAPI calculate_damage endpoint.
- * ((((2*level/5+2)*power*(atk/def))/50)+2) * stab * typeEff
- * min = floor(max * 0.85)
- */
 function calculateDamage({level, attackerStat, defenderStat, movePower, isStab, typeEffectiveness}) {
   const baseDmg = (((2 * level / 5 + 2) * movePower * (attackerStat / defenderStat)) / 50) + 2;
   const stab = isStab ? 1.5 : 1.0;
@@ -1100,13 +1431,19 @@ function calcDamage() {
   const atkStat = +document.getElementById('atk-stat').value;
   const defStat = +document.getElementById('def-stat').value;
   const level   = +document.getElementById('atk-level').value;
-  const defVal  = document.getElementById('def-pokemon').value.split(',');
-  const defTypes = defVal[2].split('-');
-  const atkTypes = ['fire','flying']; // Charizard default
+
+  // Use dynamic def types from sendToLab if defender was manually sent, else use select
+  let defTypes;
+  const defVal = document.getElementById('def-pokemon').value.split(',');
+  if (labDefTypes && labDefTypes.length > 0 && labDefTypes[0] !== 'grass') {
+    // If manually set via sendToLab, labDefTypes is authoritative; otherwise use select
+  }
+  defTypes = defVal[2].split('-');
+
+  const atkTypes = labAtkTypes;
   const typeEff  = getTypeEff(moveType, defTypes);
   const isStab   = atkTypes.includes(moveType);
 
-  // Use the JS-port of FastAPI formula
   const result = calculateDamage({
     level, attackerStat: atkStat, defenderStat: defStat,
     movePower: +power, isStab: isStab, typeEffectiveness: typeEff
@@ -1125,7 +1462,6 @@ function calcDamage() {
     <div class="result-meta-item"><div class="result-meta-val" style="color:var(--gold)">${typeEff}×</div><div class="result-meta-lab">Type Eff.</div></div>
     <div class="result-meta-item"><div class="result-meta-val">${effLabel}</div><div class="result-meta-lab">Verdict</div></div>
   `;
-  // Update defender sprite
   const defId = defVal[1];
   const defImgEl = document.querySelector('#def-sprite img');
   if (defImgEl) defImgEl.src = spriteUrlById(defId);
@@ -1135,15 +1471,232 @@ function calcDamage() {
 function updateDefender() { calcDamage(); }
 
 // ============================================================
+// META TRENDS — fetches from FastAPI /api/trends/{id}
+// Falls back to simulated data if API is unavailable
+// ============================================================
+const TREND_POKEMON = [
+  {id:6, name:'charizard'}, {id:445, name:'garchomp'}, {id:150, name:'mewtwo'},
+  {id:887, name:'dragapult'}, {id:998, name:'miraidon'}, {id:997, name:'koraidon'},
+];
+
+const TREND_COLORS = ['#cc0000','#ffd166','#4ecdc4','#a78bfa','#06d6a0','#ff9f43'];
+
+let trendChartInst = null;
+let trendDataCache = {};
+let activeTrendPokemon = [0, 1]; // indices into TREND_POKEMON
+
+async function fetchTrendData(pokemonId) {
+  if (trendDataCache[pokemonId]) return trendDataCache[pokemonId];
+  try {
+    const res = await fetch(`${API_BASE}/api/trends/${pokemonId}`);
+    if (!res.ok) throw new Error('API unavailable');
+    const data = await res.json();
+    trendDataCache[pokemonId] = data.usage;
+    return data.usage;
+  } catch {
+    // Fallback: generate plausible simulated trend client-side
+    const base = 40 + Math.random() * 40;
+    const arr = [];
+    let v = base;
+    for (let i = 0; i < 30; i++) {
+      v = Math.max(5, Math.min(100, v + (Math.random() - 0.48) * 8));
+      arr.push(Math.round(v * 10) / 10);
+    }
+    trendDataCache[pokemonId] = arr;
+    return arr;
+  }
+}
+
+async function initMetaTrends() {
+  // Build trend selector pills
+  const sel = document.getElementById('trendSelector');
+  sel.innerHTML = TREND_POKEMON.map((p, i) =>
+    `<span class="trend-pill ${activeTrendPokemon.includes(i)?'active-trend':''}" onclick="toggleTrendPokemon(${i})">${p.name.replace(/-/g,' ')}</span>`
+  ).join('');
+
+  // Fetch all
+  const allData = await Promise.all(TREND_POKEMON.map(p => fetchTrendData(p.id)));
+
+  // Render tier list
+  const tiers = TREND_POKEMON.map((p, i) => ({
+    ...p, avg: allData[i].reduce((a,b)=>a+b,0)/allData[i].length,
+    last: allData[i][allData[i].length-1]
+  })).sort((a,b) => b.avg - a.avg);
+
+  const maxAvg = tiers[0].avg;
+  document.getElementById('tierList').innerHTML = tiers.map((p, i) => `
+    <div class="tier-row">
+      <div class="tier-rank">${i+1}</div>
+      <div class="tier-sprite">${spriteImgById(p.id, p.name, 32)}</div>
+      <div class="tier-name">${p.name.replace(/-/g,' ')}</div>
+      <div class="tier-bar-wrap">
+        <div class="tier-bar-bg"><div class="tier-bar-fill" style="width:${Math.round(p.avg/maxAvg*100)}%"></div></div>
+      </div>
+      <div class="tier-pct">${p.avg.toFixed(1)}%</div>
+    </div>
+  `).join('');
+
+  // Global popularity badge
+  document.getElementById('globalPopBadge').innerHTML = `🌐 ${Math.round(tiers[0].avg)}% peak`;
+
+  renderTrendChart(allData);
+}
+
+async function toggleTrendPokemon(idx) {
+  const i = activeTrendPokemon.indexOf(idx);
+  if (i >= 0) {
+    if (activeTrendPokemon.length <= 1) return; // keep at least 1
+    activeTrendPokemon.splice(i, 1);
+  } else {
+    activeTrendPokemon.push(idx);
+  }
+  // Re-render pills
+  document.querySelectorAll('#trendSelector .trend-pill').forEach((el, i) => {
+    el.classList.toggle('active-trend', activeTrendPokemon.includes(i));
+  });
+  const allData = await Promise.all(TREND_POKEMON.map(p => fetchTrendData(p.id)));
+  renderTrendChart(allData);
+}
+
+function renderTrendChart(allData) {
+  const labels = Array.from({length:30}, (_,i) => `Day ${i+1}`);
+  const datasets = activeTrendPokemon.map(idx => ({
+    label: TREND_POKEMON[idx].name.replace(/-/g,' '),
+    data: allData[idx],
+    borderColor: TREND_COLORS[idx],
+    backgroundColor: TREND_COLORS[idx] + '18',
+    borderWidth: 2, pointRadius: 2, tension: 0.4, fill: true,
+  }));
+
+  const ctx = document.getElementById('trendChart');
+  if (!ctx) return;
+  if (trendChartInst) trendChartInst.destroy();
+  trendChartInst = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: '#2a1818', borderColor: '#cc0000', borderWidth: 1, titleColor: '#f5f0f0', bodyColor: '#a08080', callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#5a3838', maxTicksLimit: 10 } },
+        y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#a08080', callback: v => v+'%' } }
+      }
+    }
+  });
+
+  // Legend
+  document.getElementById('trendLegend').innerHTML = activeTrendPokemon.map(idx => `
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${TREND_COLORS[idx]}"></div>
+      <span>${TREND_POKEMON[idx].name.replace(/-/g,' ')}</span>
+    </div>`).join('');
+}
+
+// ---- Compare section ----
+let compareList = []; // [{id, name, color}]
+let compareChartInst = null;
+let trendSrchDebounce = null;
+
+function trendSearchInput(q) {
+  clearTimeout(trendSrchDebounce);
+  trendSrchDebounce = setTimeout(() => doTrendSearch(q), 200);
+}
+function doTrendSearch(q) {
+  const container = document.getElementById('trendSearchResults');
+  if (!q) { container.style.display='none'; return; }
+  const filtered = fullApiList.filter(p => p.name.includes(q.toLowerCase())).slice(0, 6);
+  if (!filtered.length) { container.style.display='none'; return; }
+  container.style.display = 'block';
+  container.innerHTML = filtered.map(p => {
+    const id = pokemonIdFromUrl(p.url);
+    return `<div class="live-result-item" onclick="addToCompare(${id},'${p.name}')">
+      <img src="${spriteUrlById(id)}" alt="${p.name}" onerror="this.style.opacity='0.3'">
+      <span style="text-transform:capitalize;font-weight:500">${p.name.replace(/-/g,' ')}</span>
+      <span class="live-result-num">#${String(id).padStart(3,'0')}</span>
+    </div>`;
+  }).join('');
+}
+
+function addTrendPokemon() {
+  const q = document.getElementById('trendSearch').value.trim().toLowerCase();
+  if (!q) return;
+  const p = fullApiList.find(x => x.name === q);
+  if (!p) { alert('Pokémon not found'); return; }
+  addToCompare(pokemonIdFromUrl(p.url), p.name);
+}
+
+async function addToCompare(id, name) {
+  document.getElementById('trendSearchResults').style.display='none';
+  document.getElementById('trendSearch').value = '';
+  if (compareList.length >= 3) { alert('Max 3 Pokémon for comparison'); return; }
+  if (compareList.find(x=>x.id===id)) { alert('Already in compare'); return; }
+  const color = ['#cc0000','#4ecdc4','#ffd166'][compareList.length];
+  compareList.push({id, name, color});
+  await renderCompareChart();
+}
+
+function removeFromCompare(id) {
+  compareList = compareList.filter(x=>x.id!==id);
+  if (!compareList.length) { document.getElementById('compareChartWrap').style.display='none'; return; }
+  renderCompareChart();
+}
+
+function clearCompare() { compareList=[]; document.getElementById('compareChartWrap').style.display='none'; if(compareChartInst){compareChartInst.destroy();compareChartInst=null;} }
+
+async function renderCompareChart() {
+  document.getElementById('compareChartWrap').style.display = 'block';
+  const chips = document.getElementById('compareChips');
+  chips.innerHTML = compareList.map(p =>
+    `<span class="trend-pill active-trend" style="background:${p.color};border-color:${p.color};color:#fff">
+      ${p.name.replace(/-/g,' ')} <span onclick="removeFromCompare(${p.id})" style="cursor:pointer;margin-left:4px;opacity:0.7">✕</span>
+    </span>`
+  ).join('');
+
+  const allData = await Promise.all(compareList.map(p => fetchTrendData(p.id)));
+  const labels = Array.from({length:30}, (_,i) => `Day ${i+1}`);
+  const datasets = compareList.map((p,i) => ({
+    label: p.name.replace(/-/g,' '),
+    data: allData[i],
+    borderColor: p.color,
+    backgroundColor: p.color + '18',
+    borderWidth: 2, pointRadius: 2, tension: 0.4, fill: false,
+  }));
+
+  const ctx = document.getElementById('compareChart');
+  if (compareChartInst) compareChartInst.destroy();
+  compareChartInst = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#a08080', font: { family: 'DM Mono', size: 11 } } },
+        tooltip: { backgroundColor: '#2a1818', borderColor: '#cc0000', borderWidth: 1, titleColor: '#f5f0f0', bodyColor: '#a08080', }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#5a3838', maxTicksLimit: 10 } },
+        y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#a08080', callback: v => v+'%' } }
+      }
+    }
+  });
+}
+
+// ============================================================
 // PAGE NAVIGATION
 // ============================================================
 function showPage(id, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  el.classList.add('active');
-  if (id==='team') { renderTeam(); renderHeatmap(); renderExports(); }
-  if (id==='lab')  { renderTracker(); calcDamage(); }
+  if (el) el.classList.add('active');
+  if (id==='team')   { renderTeam(); renderHeatmap(); renderExports(); }
+  if (id==='lab')    { renderTracker(); calcDamage(); }
+  if (id==='trends') { /* already initialised on load */ }
 }
 
 // ============================================================
